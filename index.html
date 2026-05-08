@@ -32,7 +32,7 @@ button:hover{background:#072548}
 <header>
 <h1>Evaluación en línea</h1>
 <p>Máquinas simples — Grado 9-1 | Tecnología e Informática | IE San Miguel</p>
-<span class="badge">33 preguntas · resultado visible sin nota · orden aleatorio</span>
+<span class="badge">33 preguntas · nota de 20 a 100 · resultado visible sin nota</span>
 </header>
 
 <div class="container">
@@ -57,7 +57,7 @@ button:hover{background:#072548}
 <section class="card intro">
 <h2>Instrucciones</h2>
 <p>Selecciona la respuesta correcta según los puntos de la infografía. Al seleccionar una opción, el sistema avanza automáticamente.</p>
-<p class="small">Al finalizar, solo verás APROBADO o NO APROBADO. La nota sí se enviará al docente.</p>
+<p class="small">Al finalizar, solo verás APROBADO o NO APROBADO. La nota de 20 a 100 sí se enviará al docente.</p>
 </section>
 
 <section class="card hidden" id="quizCard"><div id="questionContainer"></div></section>
@@ -118,8 +118,8 @@ function finishQuiz(){
 document.getElementById("quizCard").classList.add("hidden");
 document.getElementById("resultCard").classList.remove("hidden");
 const total=questions.length;
-const nota=(1+(score/total)*9).toFixed(2);
-const estado=Number(nota)>=6 ? "APROBADO" : "NO APROBADO";
+const nota=(20+(score/total)*80).toFixed(2);
+const estado=Number(nota)>=60 ? "APROBADO" : "NO APROBADO";
 const nombre=document.getElementById("nombre").value.trim();
 const curso=document.getElementById("curso").value.trim();
 const respuestas=selectedAnswers.map(r=>`P${r.pregunta}:${r.seleccion}(${r.correcta?"C":"I"})`).join(" | ");
