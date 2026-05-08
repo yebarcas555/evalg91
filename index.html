@@ -9,7 +9,8 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#edf7ff,#f2fff8);color:var(--texto);user-select:none}
 header{background:linear-gradient(90deg,var(--azul),var(--verde));color:white;text-align:center;padding:26px 14px}
-header h1{margin:0;font-size:32px} header p{margin:8px 0 0}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0}
 .container{max-width:1100px;margin:auto;padding:22px}
 .card{background:white;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 6px 20px rgba(0,0,0,.12)}
 input[type=text]{width:100%;padding:14px;margin:8px 0 14px;border:1px solid #c8d0dc;border-radius:12px;font-size:16px;user-select:text}
@@ -28,7 +29,9 @@ button:hover{background:#072548}
 .badge{display:inline-block;background:#fff7d6;color:#8a5a00;border:1px solid #f2d36b;padding:6px 10px;border-radius:999px;font-weight:bold;margin-top:8px}
 </style>
 </head>
+
 <body oncopy="return false" onpaste="return false" oncut="return false">
+
 <header>
 <h1>Evaluación en línea</h1>
 <p>Máquinas simples — Grado 9-1 | Tecnología e Informática | IE San Miguel</p>
@@ -36,6 +39,7 @@ button:hover{background:#072548}
 </header>
 
 <div class="container">
+
 <section class="card" id="datosCard">
 <h2>Datos del estudiante</h2>
 <label><strong>Nombre completo:</strong></label>
@@ -46,6 +50,7 @@ button:hover{background:#072548}
 <button onclick="startQuiz()">Iniciar evaluación</button>
 </section>
 
+
 <section class="card">
 <h2>Infografía de apoyo</h2>
 <p class="small">Observa cuidadosamente los puntos de la infografía antes de responder.</p>
@@ -54,82 +59,145 @@ button:hover{background:#072548}
 </div>
 </section>
 
+
 <section class="card intro">
 <h2>Instrucciones</h2>
 <p>Selecciona la respuesta correcta según los puntos de la infografía. Al seleccionar una opción, el sistema avanza automáticamente.</p>
-<p class="small">Al finalizar, solo verás APROBADO o NO APROBADO. La nota de 20 a 100 sí se enviará al docente.</p>
+<p class="small">Al finalizar, solo verás APROBADO o NO APROBADO. La nota de 20 a 100 se enviará al docente en Google Sheets.</p>
 </section>
 
-<section class="card hidden" id="quizCard"><div id="questionContainer"></div></section>
+<section class="card hidden" id="quizCard">
+<div id="questionContainer"></div>
+</section>
 
 <section class="card hidden" id="resultCard">
 <div class="result" id="resultText"></div>
 <p id="studentText"></p>
 <p id="avisoEnvio" class="small">Enviando resultado a Google Sheets...</p>
 </section>
+
 </div>
 
 <script>
 const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwIuwpfKykrKwIPSdduhIdrg8kjVHz6ueXX4dyw5TEzgTBDn8oBbdiZAx4R34-ZtBr6/exec";
 const questions=[{"question": "Un estudiante quiere identificar la máquina simple que amplifica la fuerza usando un punto de apoyo llamado fulcro. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 6"], "answer": 0}, {"question": "Una persona usa una barra apoyada en un punto central para levantar una carga pesada. ¿Qué punto de la infografía explica esta situación?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 0}, {"question": "Un estudiante necesita reconocer los elementos fuerza aplicada, carga, resistencia y fulcro. ¿Qué punto debe revisar?", "options": ["Punto 1", "Punto 3", "Punto 4", "Punto 5", "Punto 6"], "answer": 0}, {"question": "La carretilla y las tijeras aparecen como ejemplos de una máquina simple. ¿Qué punto corresponde?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 0}, {"question": "Una estudiante quiere estudiar los tipos de palanca de primer, segundo y tercer grado. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 0}, {"question": "Un estudiante observa una cuerda que pasa por una rueda para levantar una carga. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 6"], "answer": 1}, {"question": "Una máquina cambia la dirección de la fuerza o reduce el esfuerzo mediante una cuerda y una rueda. ¿Qué punto de la infografía explica esto?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 1}, {"question": "Las palabras “polea fija, móvil y polipasto” pertenecen principalmente a:", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 5"], "answer": 1}, {"question": "Una grúa y un pozo de agua aparecen como ejemplos de una máquina simple. ¿Qué punto debe revisarse?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 1}, {"question": "Un trabajador levanta una carga usando una cuerda, y la fuerza aplicada cambia de dirección. ¿Qué punto corresponde?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 6"], "answer": 1}, {"question": "Un estudiante quiere identificar la máquina simple que transfiere movimiento rotatorio y reduce la fricción. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 2}, {"question": "El volante de un auto y la bicicleta son ejemplos de:", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 6"], "answer": 2}, {"question": "Una rueda conectada a un eje permite mover una carga con menor fricción. ¿Qué punto de la infografía explica esto?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 2}, {"question": "Si un estudiante quiere estudiar cómo el movimiento rotatorio puede transferirse mediante una rueda, debe consultar:", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 5"], "answer": 2}, {"question": "Una persona sube una caja por una rampa para usar menos fuerza. ¿Qué punto debe revisar?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 4", "Punto 6"], "answer": 3}, {"question": "La máquina simple que reduce la fuerza necesaria para elevar un objeto aumentando la distancia es:", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 2}, {"question": "Una rampa de acceso y un tobogán aparecen como ejemplos de:", "options": ["Punto 1", "Punto 3", "Punto 4", "Punto 5", "Punto 6"], "answer": 2}, {"question": "Un estudiante observa que para subir una carga a cierta altura se usa una superficie inclinada. ¿Qué punto explica esta aplicación?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 2}, {"question": "Una máquina convierte fuerza de rotación en movimiento lineal. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 3}, {"question": "Según la infografía, el tornillo se considera:", "options": ["Una polea fija", "Una palanca de tercer grado", "Un plano inclinado enrollado", "Una rueda sin eje", "Una cuña sin filo"], "answer": 2}, {"question": "El gato de auto y las tapas de botellas aparecen como ejemplos de:", "options": ["Punto 1", "Punto 3", "Punto 4", "Punto 5", "Punto 6"], "answer": 3}, {"question": "Una fuerza aplicada en rotación produce una fuerza de sujeción o movimiento lineal. ¿Qué punto corresponde?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 3}, {"question": "Una herramienta transforma una fuerza vertical en dos fuerzas horizontales que separan. ¿Qué punto debe consultar?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 4}, {"question": "La cuña está formada por:", "options": ["Una rueda y un eje", "Una cuerda y una rueda", "Dos planos inclinados espalda con espalda", "Un fulcro y una carga", "Un tornillo y una palanca"], "answer": 2}, {"question": "Un cuchillo, un hacha y un clavo aparecen como ejemplos de:", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 4}, {"question": "Una persona usa un hacha para separar un tronco aplicando una fuerza de impacto. ¿Qué punto explica esta acción?", "options": ["Punto 1", "Punto 2", "Punto 4", "Punto 5", "Punto 6"], "answer": 4}, {"question": "Un estudiante quiere comparar una palanca y una polea. ¿Qué puntos debe consultar?", "options": ["Puntos 1 y 2", "Puntos 3 y 4", "Puntos 4 y 5", "Puntos 5 y 6", "Puntos 2 y 6"], "answer": 0}, {"question": "Una estudiante quiere comparar la rueda y eje con el plano inclinado. ¿Qué puntos debe revisar?", "options": ["Puntos 1 y 2", "Puntos 2 y 3", "Puntos 3 y 4", "Puntos 4 y 6", "Puntos 5 y 6"], "answer": 2}, {"question": "Si se desea estudiar las máquinas que involucran rotación, ¿qué puntos son más adecuados?", "options": ["Puntos 1 y 2", "Puntos 2, 3 y 5", "Puntos 3, 4 y 6", "Puntos 1, 4 y 6", "Puntos 4, 5 y 6"], "answer": 1}, {"question": "Una persona necesita levantar una carga, moverla con menor fricción y luego subirla por una rampa. ¿Qué puntos debe consultar?", "options": ["Puntos 1, 2 y 6", "Puntos 2, 3 y 4", "Puntos 3, 5 y 6", "Puntos 1, 5 y 6", "Puntos 4, 5 y 6"], "answer": 1}, {"question": "Un estudiante quiere reconocer máquinas simples que reducen el esfuerzo humano en diferentes situaciones. ¿Qué conjunto de puntos representa mejor toda la infografía?", "options": ["Puntos 1, 2 y 3 solamente", "Puntos 4, 5 y 6 solamente", "Puntos 1, 2, 3, 4, 5 y 6", "Puntos 2, 4 y 6 solamente", "Puntos 1, 3 y 5 solamente"], "answer": 2}, {"question": "Si una herramienta sirve para cortar o separar materiales, ¿qué punto de la infografía se relaciona mejor con esa función?", "options": ["Punto 1", "Punto 2", "Punto 3", "Punto 5", "Punto 6"], "answer": 4}, {"question": "La idea general de la infografía es que las máquinas simples:", "options": ["Hacen más pesado el trabajo humano", "Funcionan únicamente con electricidad", "Facilitan el trabajo humano aplicando fuerza de distintas maneras", "Solo sirven para levantar cargas con poleas", "Reemplazan todas las herramientas modernas"], "answer": 2}];
-let currentQuestion=0, score=0, selectedAnswers=[];
 
-function mezclarArray(array){for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];}}
+let currentQuestion=0;
+let score=0;
+let selectedAnswers=[];
+
+function mezclarArray(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+}
 
 function startQuiz(){
-const nombre=document.getElementById("nombre").value.trim();
-if(!nombre){alert("Completa el nombre del estudiante.");return;}
-mezclarArray(questions);
-questions.forEach(q=>{const correcta=q.options[q.answer];mezclarArray(q.options);q.answer=q.options.indexOf(correcta);});
-document.getElementById("datosCard").classList.add("hidden");
-document.getElementById("quizCard").classList.remove("hidden");
-showQuestion();
+  const nombre=document.getElementById("nombre").value.trim();
+
+  if(!nombre){
+    alert("Completa el nombre del estudiante.");
+    return;
+  }
+
+  mezclarArray(questions);
+
+  questions.forEach(q=>{
+    const correcta=q.options[q.answer];
+    mezclarArray(q.options);
+    q.answer=q.options.indexOf(correcta);
+  });
+
+  document.getElementById("datosCard").classList.add("hidden");
+  document.getElementById("quizCard").classList.remove("hidden");
+  showQuestion();
 }
 
 function showQuestion(){
-const q=questions[currentQuestion];
-let html=`<div class="progress">Pregunta ${currentQuestion+1} de ${questions.length}</div><h2>${q.question}</h2>`;
-q.options.forEach((option,index)=>{html+=`<label class="option"><input type="radio" name="option" value="${index}" onchange="nextQuestion()"> ${String.fromCharCode(65+index)}. ${option}</label>`;});
-document.getElementById("questionContainer").innerHTML=html;
-window.scrollTo({top:document.getElementById("quizCard").offsetTop-20,behavior:"smooth"});
+  const q=questions[currentQuestion];
+
+  let html=`<div class="progress">Pregunta ${currentQuestion+1} de ${questions.length}</div><h2>${q.question}</h2>`;
+
+  q.options.forEach((option,index)=>{
+    html+=`<label class="option"><input type="radio" name="option" value="${index}" onchange="nextQuestion()"> ${String.fromCharCode(65+index)}. ${option}</label>`;
+  });
+
+  document.getElementById("questionContainer").innerHTML=html;
+  window.scrollTo({top:document.getElementById("quizCard").offsetTop-20,behavior:"smooth"});
 }
 
 function nextQuestion(){
-const selected=document.querySelector('input[name="option"]:checked');
-if(!selected)return;
-const answer=Number(selected.value);
-const q=questions[currentQuestion];
-selectedAnswers.push({pregunta:currentQuestion+1,seleccion:String.fromCharCode(65+answer),correcta:answer===q.answer});
-if(answer===q.answer)score++;
-setTimeout(()=>{currentQuestion++;if(currentQuestion<questions.length)showQuestion();else finishQuiz();},250);
+  const selected=document.querySelector('input[name="option"]:checked');
+  if(!selected)return;
+
+  const answer=Number(selected.value);
+  const q=questions[currentQuestion];
+
+  selectedAnswers.push({
+    pregunta:currentQuestion+1,
+    seleccion:String.fromCharCode(65+answer),
+    texto:q.options[answer],
+    correcta:answer===q.answer
+  });
+
+  if(answer===q.answer)score++;
+
+  setTimeout(()=>{
+    currentQuestion++;
+    if(currentQuestion<questions.length)showQuestion();
+    else finishQuiz();
+  },250);
 }
 
 function enviarResultadosGoogleSheets(nombre,curso,puntaje,total,nota,respuestas){
-const params=new URLSearchParams();
-params.set("nombre",nombre);params.set("curso",curso);params.set("puntaje",puntaje);params.set("total",total);params.set("nota",nota);params.set("respuestas",respuestas);
-const iframe=document.createElement("iframe");
-iframe.style.display="none";
-iframe.src=APPS_SCRIPT_URL+"?"+params.toString();
-document.body.appendChild(iframe);
-document.getElementById("avisoEnvio").textContent="Resultado enviado al docente.";
+  const params=new URLSearchParams();
+  params.set("nombre",nombre);
+  params.set("curso",curso);
+  params.set("puntaje",puntaje);
+  params.set("total",total);
+  params.set("nota",nota);
+  params.set("respuestas",respuestas);
+
+  const iframe=document.createElement("iframe");
+  iframe.style.display="none";
+  iframe.src=APPS_SCRIPT_URL+"?"+params.toString();
+  document.body.appendChild(iframe);
+
+  document.getElementById("avisoEnvio").textContent="Resultado enviado al docente.";
 }
 
 function finishQuiz(){
-document.getElementById("quizCard").classList.add("hidden");
-document.getElementById("resultCard").classList.remove("hidden");
-const total=questions.length;
-const nota=(20+(score/total)*80).toFixed(2);
-const estado=Number(nota)>=60 ? "APROBADO" : "NO APROBADO";
-const nombre=document.getElementById("nombre").value.trim();
-const curso=document.getElementById("curso").value.trim();
-const respuestas=selectedAnswers.map(r=>`P${r.pregunta}:${r.seleccion}(${r.correcta?"C":"I"})`).join(" | ");
-enviarResultadosGoogleSheets(nombre,curso,score,total,nota,respuestas);
-document.getElementById("resultText").innerHTML=`Resultado: ${estado}`;
-document.getElementById("studentText").innerHTML=`Estudiante: ${nombre}<br>Grado: ${curso}`;
+  document.getElementById("quizCard").classList.add("hidden");
+  document.getElementById("resultCard").classList.remove("hidden");
+
+  const total=questions.length;
+
+  // Escala: mínimo 20, máximo 100, sin decimales
+  const nota=Math.round(20+(score/total)*80);
+
+  // Aprobado desde 60
+  const estado=Number(nota)>=60 ? "APROBADO" : "NO APROBADO";
+
+  const nombre=document.getElementById("nombre").value.trim();
+  const curso=document.getElementById("curso").value.trim();
+
+  const respuestas=selectedAnswers.map(r=>`P${r.pregunta}:${r.texto}(${r.correcta?"C":"I"})`).join(" | ");
+
+  enviarResultadosGoogleSheets(nombre,curso,score,total,nota,respuestas);
+
+  document.getElementById("resultText").innerHTML=`Resultado: ${estado}`;
+  document.getElementById("studentText").innerHTML=`Estudiante: ${nombre}<br>Grado: ${curso}`;
 }
 
 document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("keydown",e=>{const key=e.key.toLowerCase();if((e.ctrlKey||e.metaKey)&&["c","v","x","a","u","s","p"].includes(key))e.preventDefault();if(e.key==="F12")e.preventDefault();});
+
+document.addEventListener("keydown",e=>{
+  const key=e.key.toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&["c","v","x","a","u","s","p"].includes(key))e.preventDefault();
+  if(e.key==="F12")e.preventDefault();
+});
 </script>
+
 </body>
 </html>
