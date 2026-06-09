@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evaluación Microsoft y Excel - Grado 9-2</title>
+<title>Recuperación Microsoft y Excel - Grado 9-2</title>
 <style>
 :root{--azul:#0b3766;--verde:#0f7b54;--texto:#111827}
 *{box-sizing:border-box}
@@ -32,9 +32,9 @@ button:hover{background:#072548}
 <body oncopy="return false" onpaste="return false" oncut="return false">
 
 <header>
-  <h1>Evaluación en línea</h1>
-  <p>Microsoft y Excel — Grado 9-2 | Tecnología e Informática | IE San Miguel</p>
-  <span class="badge">80 preguntas · respuestas por partes · nota de 20 a 100</span>
+  <h1>Evaluación de recuperación</h1>
+  <p>Microsoft y Excel — Recuperación Grado 9-2 | Tecnología e Informática | IE San Miguel</p>
+  <span class="badge">80 preguntas · respuestas por partes · botón Siguiente</span>
 </header>
 
 <div class="container">
@@ -61,16 +61,18 @@ button:hover{background:#072548}
 
 <section class="card intro">
   <h2>Instrucciones</h2>
-  <p>Lee cada pregunta y selecciona la parte de la infografía que corresponde. Cada pregunta tiene cinco opciones de respuesta.</p>
-  <p class="small">Las preguntas y opciones se mezclan automáticamente. Las opciones aparecen sin letras. Al finalizar, solo verás APROBADO o NO APROBADO. La nota se enviará al docente.</p>
+  <p>Lee cada pregunta y selecciona la parte de la infografía que corresponde.</p>
+  <p>Después de seleccionar tu respuesta, presiona el botón <strong>Siguiente</strong>.</p>
+  <p class="small">Las preguntas y opciones se mezclan automáticamente. Las opciones aparecen sin letras.</p>
+  <p class="warning">Esta evaluación es de recuperación. Al finalizar no se mostrará nota, aprobado ni no aprobado. El resultado será revisado por el docente.</p>
 </section>
 
 <section class="card hidden" id="quizCard"><div id="questionContainer"></div></section>
 
 <section class="card hidden" id="resultCard">
-  <div class="result" id="resultText"></div>
+  <div class="result" id="resultText">Evaluación finalizada</div>
   <p id="studentText"></p>
-  <p id="avisoEnvio" class="small">Enviando resultado a Google Sheets...</p>
+  <p id="avisoEnvio" class="small">Enviando resultado al docente...</p>
 </section>
 
 </div>
@@ -117,16 +119,17 @@ function showQuestion(){
   let html = `<div class="progress">Pregunta ${currentQuestion+1} de ${questions.length}</div><h2>${q.question}</h2>`;
 
   q.options.forEach((option,index) => {
-    html += `<label class="option"><input type="radio" name="option" value="${index}" onchange="nextQuestion()"> ${option}</label>`;
+    html += `<label class="option"><input type="radio" name="option" value="${index}"> ${option}</label>`;
   });
 
+  html += `<button onclick="nextQuestion()">Siguiente</button>`;
   document.getElementById("questionContainer").innerHTML = html;
   window.scrollTo({top:document.getElementById("quizCard").offsetTop-20, behavior:"smooth"});
 }
 
 function nextQuestion(){
   const selected = document.querySelector('input[name="option"]:checked');
-  if(!selected) return;
+  if(!selected){ alert("Selecciona una respuesta antes de continuar."); return; }
 
   const answer = Number(selected.value);
   const q = questions[currentQuestion];
@@ -153,7 +156,7 @@ function enviarResultadosGoogleSheets(nombre,curso,puntaje,total,nota,respuestas
   const params = new URLSearchParams();
   params.set("nombre", nombre);
   params.set("curso", curso);
-  params.set("evaluacion", "Microsoft y Excel 9-2");
+  params.set("evaluacion", "Recuperacion Microsoft y Excel 9-2");
   params.set("puntaje", puntaje);
   params.set("total", total);
   params.set("nota", nota);
@@ -179,7 +182,7 @@ function finishQuiz(){
 
   const total = questions.length;
   const nota = Math.round(20 + (score/total) * 80);
-  const estado = Number(nota) >= 60 ? "APROBADO" : "NO APROBADO";
+  
 
   const nombre = document.getElementById("nombre").value.trim();
   const curso = document.getElementById("curso").value.trim();
@@ -188,8 +191,8 @@ function finishQuiz(){
 
   enviarResultadosGoogleSheets(nombre, curso, score, total, nota, respuestas);
 
-  document.getElementById("resultText").innerHTML = `Resultado: ${estado}`;
-  document.getElementById("studentText").innerHTML = `Estudiante: ${nombre}<br>Grado: ${curso}`;
+  
+  document.getElementById("studentText").innerHTML = `Estudiante: ${nombre}<br>Grado: ${curso}<br><br>Tu evaluación fue registrada. Espera la revisión del docente.`;
 }
 
 document.addEventListener("contextmenu", e => e.preventDefault());
