@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evaluación ICFES Infografía Dibujo Técnico - Grado 9-2</title>
+<title>Evaluación ICFES Infografía Dibujo Técnico - Grado 9-1</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#edf7ff,#f2fff8);color:#111827;user-select:none}
@@ -29,7 +29,7 @@ button{background:#0b3766;color:white;border:0;border-radius:12px;padding:14px 2
 <body oncopy="return false" onpaste="return false" oncut="return false">
 <header>
 <h1>Evaluación tipo ICFES</h1>
-<p>El dibujo técnico en tecnología — Grado 9-2 | Tecnología e Informática</p>
+<p>El dibujo técnico en tecnología — Grado 9-1 | Tecnología e Informática</p>
 <span class="badge">50 preguntas · respuestas Parte 1 a Parte 16 · cinco opciones</span>
 </header>
 <div class="container">
@@ -38,8 +38,8 @@ button{background:#0b3766;color:white;border:0;border-radius:12px;padding:14px 2
 <label><strong>Nombre completo:</strong></label>
 <input type="text" id="nombre" placeholder="Nombre completo">
 <label><strong>Grado:</strong></label>
-<div class="grado-fijo">9-2</div>
-<input type="hidden" id="curso" value="9-2">
+<div class="grado-fijo">9-1</div>
+<input type="hidden" id="curso" value="9-1">
 <button onclick="startQuiz()">Iniciar evaluación</button>
 </section>
 
@@ -122,7 +122,7 @@ function enviarResultadosGoogleSheets(nombre,curso,puntaje,total,nota,respuestas
   const params=new URLSearchParams();
   params.set("nombre",nombre);
   params.set("curso",curso);
-  params.set("evaluacion","Evaluacion ICFES infografia dibujo tecnico grado 9-2");
+  params.set("evaluacion","Evaluacion ICFES infografia dibujo tecnico grado 9-1");
   params.set("puntaje",puntaje);
   params.set("total",total);
   params.set("nota",nota);
